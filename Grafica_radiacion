@@ -1,0 +1,28 @@
+cls
+n=63; #Día del año
+lat=19; #Latitud
+M=3; #Minutos del día
+t=365;
+
+vector_H=[];
+vector_hsol=[];
+
+for i=1:t
+  S=23.5*sind(360*(((284+i)/365))); #Ángulo declinación
+  N=(2/15)*acosd(-tand(lat)*tand(S)); #Duración del día
+  h=asind(sind(S)*sind(lat)+cosd(S)*cosd(lat)*cosd(0)); #Altura
+  H=(11.67*60/4)-(i-1); #Ángulo horario
+  Hr=12-(H*4/60); #Horas del día
+  
+  #Altura del sol
+  #hsol=1000*sind(asind(sind(-7.165)*sind(lat)+cosd(-7.165)*cosd(lat)*cosd(H)));
+  hsol=1000*sind(asind((sind(S)*sind(lat))+(cosd(S)*cosd(lat)*cosd(H))));
+  
+  vector_H=[vector_H;Hr];
+  vector_hsol=[vector_hsol;hsol];
+
+endfor
+
+plot(vector_H, vector_hsol,'x', "markersize", 2)
+xlim([0,24]);
+ylim([0,1200]);
